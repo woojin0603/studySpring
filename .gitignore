@@ -9,3 +9,10 @@
 # OS
 .DS_Store
 Thumbs.db
+
+# querydsl 설정시 추가되는 qitem 제거
+/build/generated/
+/src/main/generated/
+/generated/
+/generated/
+Q*.java
