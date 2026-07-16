@@ -10,8 +10,16 @@ public class Member {
 
     @Id
     private Long id;
-
     private String name;
+
+    public Member(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    // JPA를 위함
+    public Member() {
+    }
 
     public Long getId() {
         return id;
