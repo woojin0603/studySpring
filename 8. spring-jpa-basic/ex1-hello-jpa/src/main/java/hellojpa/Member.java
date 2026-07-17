@@ -19,14 +19,24 @@ import java.util.Date;
         initialValue = 1, allocationSize = 1)
 public class Member {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MEMBER_SEQ_GENERATOR")
+    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE,
+            generator = "MEMBER_SEQ_GENERATOR")
+    @Column(name = "MEMBER_ID")
     private Long id;
 
-    @Column(name = "name", updatable = false, nullable = false)
+    @Column(name = "USERNAME")
     private String userName;
 
-    private int age;
+   /* @Column(name = "TEAM_ID")
+    private Long teamId;*/
+
+    @ManyToOne  // 클래스(Member)과 객체(Team)의 연관관계 중 Member이 "다" 쪽이므로  @ManyToOne으로 표시
+    @JoinColumn(name = "TEAM_ID")
+    private Team team;
+
+    // JPA를 위함
+    public Member() {
+    }
 
     public Long getId() {
         return id;
@@ -44,13 +54,29 @@ public class Member {
         this.userName = userName;
     }
 
-    public int getAge() {
-        return age;
+    public Team getTeam() {
+        return team;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setTeam(Team team) {
+        this.team = team;
     }
+
+    @Override
+    public String toString() {
+        return "Member{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", team=" + team +
+                '}';
+    }
+
+    // 연관관계 메서드는 양쪽에 있으면 문제가 발생할 수 있음
+ /*   public void changeTeam(Team team) {
+        this.team = team;
+        team.getMembers().add(this);
+    }*/
+
 
     /* @Enumerated
     private RoleType roleType;
@@ -134,9 +160,7 @@ public class Member {
         this.temp = temp;
     }*/
 
-    // JPA를 위함
-    public Member() {
-    }
+
 
 
 }

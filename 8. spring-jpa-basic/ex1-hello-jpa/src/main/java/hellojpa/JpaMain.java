@@ -94,7 +94,7 @@ public class JpaMain {
             System.out.println("member.id = " + member.getId());
             System.out.println("===============================");
 */
-            Member member1 = new Member();
+           /* Member member1 = new Member();
             member1.setUserName("A");
 
             Member member2 = new Member();
@@ -112,7 +112,43 @@ public class JpaMain {
             System.out.println("member2 = " + member2.getId());
             System.out.println("member3 = " + member3.getId());
 
-            System.out.println("===============================");
+            System.out.println("===============================");*/
+
+            // 저장
+            Team team = new Team();
+            team.setName("TeamA");
+ //           team.getMembers().add(member);
+            em.persist(team);
+
+            Member member = new Member();
+            member.setUserName("member1");
+          //  member.changeTeam(team);
+          //  member.setTeam(team);   // 연관관계에 주인에 값을 넣음(mappedBy에 넣으면 값이 안들어간다.)
+            em.persist(member);
+
+            team.addMember(member);
+
+            em.flush();
+            em.clear();
+
+            Team findTeam = em.find(Team.class, team.getId());
+            List<Member> members = findTeam.getMembers();
+
+            System.out.println("======================");
+            System.out.println("members = " + findTeam);
+            System.out.println("======================");
+
+
+          /*  Member findMember = em.find(Member.class, member.getId());
+           *//* Team findTeam = findMember.getTeam();
+            System.out.println("findTeam = " + findTeam.getName());*//*
+
+            List<Member> members = findMember.getTeam().getMembers();
+            for (Member m : members) {
+                System.out.println("m = " + m.getUserName());
+            }*/
+
+
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
