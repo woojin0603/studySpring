@@ -27,6 +27,7 @@ public class Team extends BaseEntity {
         members.add(member);
     }*/
 
+
     public Long getId() {
         return id;
     }
