@@ -114,7 +114,7 @@ public class JpaMain {
 
             System.out.println("===============================");*/
 
-            // 저장
+         /*   // 저장
             Team team = new Team();
             team.setName("TeamA");
  //           team.getMembers().add(member);
@@ -136,7 +136,7 @@ public class JpaMain {
 
             System.out.println("======================");
             System.out.println("members = " + findTeam);
-            System.out.println("======================");
+            System.out.println("======================");*/
 
 
           /*  Member findMember = em.find(Member.class, member.getId());
@@ -148,6 +148,16 @@ public class JpaMain {
                 System.out.println("m = " + m.getUserName());
             }*/
 
+            Member member = new Member();
+            member.setUserName("member1");
+
+            em.persist(member);
+
+            Team team = new Team();
+            team.setName("teamA");
+            team.getMembers().add(member);
+
+            em.persist(team);
 
             tx.commit();
         } catch (Exception e) {

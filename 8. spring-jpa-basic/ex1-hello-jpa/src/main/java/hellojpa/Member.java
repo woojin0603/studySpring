@@ -5,7 +5,9 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 //@SequenceGenerator(name = "member_seq_generator", sequenceName = "member_seq")
@@ -27,12 +29,21 @@ public class Member {
     @Column(name = "USERNAME")
     private String userName;
 
+    @ManyToOne
+    @JoinColumn(name = "TEAM_ID", insertable = false, updatable = false)
+    private Team team;
+
+    @OneToOne
+    @JoinColumn(name = "LOCKER_ID")
+    private Locker locker;
+
+    @OneToMany(mappedBy = "member")
+    private List<MemberProduct> memberProducts = new ArrayList<>();
+
+
    /* @Column(name = "TEAM_ID")
     private Long teamId;*/
 
-    @ManyToOne  // 클래스(Member)과 객체(Team)의 연관관계 중 Member이 "다" 쪽이므로  @ManyToOne으로 표시
-    @JoinColumn(name = "TEAM_ID")
-    private Team team;
 
     // JPA를 위함
     public Member() {
@@ -54,22 +65,7 @@ public class Member {
         this.userName = userName;
     }
 
-    public Team getTeam() {
-        return team;
-    }
 
-    public void setTeam(Team team) {
-        this.team = team;
-    }
-
-    @Override
-    public String toString() {
-        return "Member{" +
-                "id=" + id +
-                ", userName='" + userName + '\'' +
-                ", team=" + team +
-                '}';
-    }
 
     // 연관관계 메서드는 양쪽에 있으면 문제가 발생할 수 있음
  /*   public void changeTeam(Team team) {

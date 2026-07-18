@@ -14,9 +14,18 @@ public class Team {
     private Long id;
     private String name;
 
-    // mappedBy가 붙은쪽은 주인이 아니며, 조회만 가능하다., 값을 넣어도 변화 X
+    @OneToMany
+    @JoinColumn(name = "TEAM_ID")
+    private List<Member> members = new ArrayList<>();
+
+   /* // mappedBy가 붙은쪽은 주인이 아니며, 조회만 가능하다., 값을 넣어도 변화 X
     @OneToMany(mappedBy = "team")   // Member의 team과 엮여 있다는 의미(Team에서 여러 Member로 뻗어나가므로 OneToMany)
     private List<Member> members = new ArrayList<>();
+
+    public void addMember(Member member) {
+        member.setTeam(this);
+        members.add(member);
+    }*/
 
     public Long getId() {
         return id;
@@ -40,19 +49,5 @@ public class Team {
 
     public void setMembers(List<Member> members) {
         this.members = members;
-    }
-
-    public void addMember(Member member) {
-        member.setTeam(this);
-        members.add(member);
-    }
-
-    @Override
-    public String toString() {
-        return "Team{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", members=" + members +
-                '}';
     }
 }
