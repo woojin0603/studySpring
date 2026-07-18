@@ -1,12 +1,7 @@
 package hellojpa;
 
 import jakarta.persistence.*;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -19,7 +14,7 @@ import java.util.List;
         name = "MEMBER_SEQ_GENERATOR",
         sequenceName = "MEMBER_SEQ",    // 매필할 데이터베이스 시퀀스 이름
         initialValue = 1, allocationSize = 1)
-public class Member {
+public class Member extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.SEQUENCE,
             generator = "MEMBER_SEQ_GENERATOR")
@@ -39,6 +34,8 @@ public class Member {
 
     @OneToMany(mappedBy = "member")
     private List<MemberProduct> memberProducts = new ArrayList<>();
+
+
 
 
    /* @Column(name = "TEAM_ID")

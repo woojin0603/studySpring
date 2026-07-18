@@ -2,6 +2,7 @@ package hellojpa;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -148,7 +149,7 @@ public class JpaMain {
                 System.out.println("m = " + m.getUserName());
             }*/
 
-            Member member = new Member();
+            /*Member member = new Member();
             member.setUserName("member1");
 
             em.persist(member);
@@ -157,7 +158,32 @@ public class JpaMain {
             team.setName("teamA");
             team.getMembers().add(member);
 
-            em.persist(team);
+            em.persist(team);*/
+
+           /* // 고급 매핑 학습
+            Movie movie = new Movie();
+            movie.setDirector("aaaa");
+            movie.setActor("bbbb");
+            movie.setName("바람과함께사라지다");
+            movie.setPrice(10000);
+
+            em.persist(movie);
+
+            em.flush();
+            em.clear();
+
+            Item item = em.find(Item.class, movie.getId());
+            System.out.println("item = " + item.getId());
+*/
+            // MappedSuperclass 학습
+            Member member = new Member();
+            member.setUserName("user1");
+            member.setCreateBy("kim");
+            member.setCreateDate(LocalDateTime.now());
+
+            em.persist(member);
+            em.flush();
+            em.clear();
 
             tx.commit();
         } catch (Exception e) {
