@@ -1,6 +1,9 @@
 package hellojpa;
 
 import jakarta.persistence.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import org.hibernate.Hibernate;
 
 import java.time.LocalDateTime;
@@ -290,6 +293,20 @@ public class JpaMain {
 
             findMember.getAddressHistory().remove(new Address("old1", "street", "10000"));
             findMember.getAddressHistory().add(new Address("newCity1", "street", "10000"));*/
+
+           /* // Criteria 사용 준비
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Member> query = cb.createQuery(Member.class);
+
+            // 루트 클래스(조회를 시작할 클래스
+            Root<Member> m = query.from(Member.class);
+
+            // 쿼리 생성
+            CriteriaQuery<Member> cq = query.select(m).where(cb.equal(m.get("username"), "kim"));
+            List<Member> resultList = em.createQuery(cq).getResultList();
+*/
+            em.createNativeQuery("select MEMBER_ID, city, street, zipcodem USERNAME from MEMBER")
+                    .getResultList();
 
             tx.commit();
         } catch (Exception e) {
