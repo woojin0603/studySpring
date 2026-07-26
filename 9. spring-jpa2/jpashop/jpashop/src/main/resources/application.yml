@@ -13,6 +13,7 @@ spring:
 #        show_sql: true
         format_sql: true
         default_batch_fetch_size: 100
+    open-in-view: true # false로 설정할 경우, 트랜잭션이 종료될 때 패치조인 등으로 지연 로딩을 강제로 호출해야만 한다.
 
 logging:
   level:
