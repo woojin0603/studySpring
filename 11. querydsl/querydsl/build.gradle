@@ -1,0 +1,62 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.3.0' // 3.x 버전으로 수정
+	id 'io.spring.dependency-management' version '1.1.5'
+}
+
+group = 'study'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web' // webmvc -> web
+
+	// Lombok
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	testCompileOnly 'org.projectlombok:lombok'
+	testAnnotationProcessor 'org.projectlombok:lombok'
+
+	// DB
+	runtimeOnly 'com.h2database:h2'
+	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.0'
+
+	// Querydsl (Spring Boot 3.x / Jakarta)
+	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+	annotationProcessor 'com.querydsl:querydsl-apt:5.0.0:jakarta' // 버전을 명시적으로 지정
+	annotationProcessor 'jakarta.annotation:jakarta.annotation-api'
+	annotationProcessor 'jakarta.persistence:jakarta.persistence-api'
+
+	// Test
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+// === Querydsl QClass 생성 설정 ===
+def querydslDir = layout.buildDirectory.dir("generated/querydsl").get().asFile
+
+sourceSets {
+	main.java.srcDirs += [ querydslDir ]
+}
+
+tasks.withType(JavaCompile).configureEach {
+	options.generatedSourceOutputDirectory.set(file(querydslDir))
+}
+
+clean {
+	delete file(querydslDir)
+}
