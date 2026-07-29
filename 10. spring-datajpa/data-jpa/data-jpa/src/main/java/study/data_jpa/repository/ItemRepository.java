@@ -5,4 +5,5 @@ import study.data_jpa.entity.Item;
 
 public interface ItemRepository extends JpaRepository<Item, Long> {
 
+
 }
